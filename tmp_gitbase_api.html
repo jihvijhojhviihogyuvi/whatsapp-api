@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <link href="https://media.base44.com/images/public/69d95f6afd9fc4f78a067a0f/dfea61004_logo.png" rel="icon" type="image/svg+xml"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="/manifest.json" rel="manifest"/>
+  <title>
+   api | ForgeHub
+  </title>
+  <script crossorigin="" src="/assets/index-BsBVxc1n.js" type="module">
+  </script>
+  <link crossorigin="" href="/assets/index-Dx05s6KI.css" rel="stylesheet"/>
+  <script type="module">
+   if (window.self === window.top) {
+  let lastPath = "";
+  function getPageNameFromPath(path) {
+    const segments = path.split("/").filter(Boolean);
+    return segments[0] || null;
+  }
+  function trackPageView() {
+    const path = window.location.pathname;
+    if (path === lastPath) return;
+    lastPath = path;
+    const pageName = getPageNameFromPath(path) || "home";
+    const appId = "69d95f6afd9fc4f78a067a0f";
+    if (!appId) return;
+    fetch(`/app-logs/${appId}/log-user-in-app/${pageName}`, {
+      method: "POST",
+    }).catch(() => {});
+  }
+  const originalPushState = history.pushState.bind(history);
+  history.pushState = function (...args) {
+    originalPushState(...args);
+    trackPageView();
+  };
+  const originalReplaceState = history.replaceState.bind(history);
+  history.replaceState = function (...args) {
+    originalReplaceState(...args);
+    trackPageView();
+  };
+  window.addEventListener("popstate", trackPageView);
+  trackPageView();
+}
+  </script>
+  <meta content="A developer-focused repository hosting platform where you can create, manage, and collaborate on code projects entirely through a streamlined web-based interface." name="description"/>
+  <meta content="api | ForgeHub" property="og:title"/>
+  <meta content="A developer-focused repository hosting platform where you can create, manage, and collaborate on code projects entirely through a streamlined web-based interface." property="og:description"/>
+  <meta content="https://media.base44.com/images/public/69d95f6afd9fc4f78a067a0f/dfea61004_logo.png/v1/fill/w_1200,h_630/dfea61004_logo.png" property="og:image"/>
+  <meta content="https://gitbase.base44.app/api" property="og:url"/>
+  <meta content="website" property="og:type"/>
+  <meta content="ForgeHub" property="og:site_name"/>
+  <meta content="api | ForgeHub" name="twitter:title"/>
+  <meta content="A developer-focused repository hosting platform where you can create, manage, and collaborate on code projects entirely through a streamlined web-based interface." name="twitter:description"/>
+  <meta content="https://media.base44.com/images/public/69d95f6afd9fc4f78a067a0f/dfea61004_logo.png/v1/fill/w_1200,h_630/dfea61004_logo.png" name="twitter:image"/>
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="https://gitbase.base44.app/api" name="twitter:url"/>
+  <meta content="yes" name="mobile-web-app-capable"/>
+  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+  <meta content="ForgeHub" name="apple-mobile-web-app-title"/>
+  <link href="https://gitbase.base44.app/api" rel="canonical"/>
+  <script async="true" data-app-id="69d95f6afd9fc4f78a067a0f" data-platform-url="https://app.base44.com" src="/static/js/badge.js">
+  </script>
+ </head>
+ <body>
+  <div id="root">
+  </div>
+ </body>
+</html>

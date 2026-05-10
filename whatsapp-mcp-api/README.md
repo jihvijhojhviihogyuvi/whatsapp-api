@@ -57,7 +57,7 @@ Enter the returned code. The auth state is saved in `.wwebjs_auth/session-defaul
 Do not delete this folder:
 
 ```text
-C:\Users\james\OneDrive\Documents\Playground\whatsapp-mcp-api\.wwebjs_auth\session-default
+./.wwebjs_auth/session-default
 ```
 
 That Chrome profile contains the linked-device auth. It is excluded from git because it is sensitive. Back up the whole `.wwebjs_auth` folder if you want to preserve the login across machine moves or workspace cleanup.
@@ -82,6 +82,12 @@ curl.exe -X POST http://127.0.0.1:8790/api/send `
 ```powershell
 $env:WHATSAPP_MCP_HOST = "127.0.0.1"
 $env:WHATSAPP_MCP_PORT = "8790"
+$env:WHATSAPP_AUTH_DIR = "C:\path\to\auth"
+$env:WHATSAPP_CHROME_EXECUTABLE = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+```
+"C:\Program Files\Google\Chrome\Application\chrome.exe"
+```
+WHATSAPP_MCP_PORT = "8790"
 $env:WHATSAPP_AUTH_DIR = "C:\path\to\auth"
 $env:WHATSAPP_CHROME_EXECUTABLE = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 ```

@@ -19,7 +19,7 @@ git clone https://github.com/jihvijhojhviihogyuvi/whatsapp-api.git
 ## Install
 
 ```powershell
-cd whatsapp-api
+cd whatsapp-api/whatsapp-mcp-api
 npm install
 ```
 
@@ -83,3 +83,4 @@ Available tools:
 ## Notes
 
 This project uses an unofficial WhatsApp Web client. Use it only with accounts and recipients you control or have permission to message.
+ion to message.

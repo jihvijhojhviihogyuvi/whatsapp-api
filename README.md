@@ -11,12 +11,12 @@ The app lives in:
 ```text
 whatsapp-mcp-api/
 ```
+## Clone
 
-## Install
 ```powershell
 git clone https://github.com/jihvijhojhviihogyuvi/whatsapp-api.git
 ```
-
+## Install
 
 ```powershell
 cd whatsapp-mcp-api

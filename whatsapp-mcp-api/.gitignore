@@ -1,0 +1,8 @@
+node_modules/
+.wa_auth/
+.wwebjs_auth/
+.wwebjs_cache/
+.chrome-whatsapp-code-profile/
+.env
+*.log
+*.png

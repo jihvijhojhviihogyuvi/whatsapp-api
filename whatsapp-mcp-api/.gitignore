@@ -1,0 +1,13 @@
+# Ignore temporary and user-specific files
+.chrome-whatsapp-code-profile/
+.wwebjs_auth/
+.wwebjs_cache/
+.wa_auth/
+node_modules/
+*.png
+
+# Ignore log files
+server-debug.err.log
+server-debug.log
+server.err.log
+server.log

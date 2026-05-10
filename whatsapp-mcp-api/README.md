@@ -9,17 +9,30 @@ It exposes both:
 
 This uses `whatsapp-web.js`, an unofficial WhatsApp Web client. Use it only for accounts and recipients you control or have permission to message. Automated WhatsApp use may violate WhatsApp terms.
 
+## Get Started
+
+First, clone the repository:
+
+```bash
+git clone https://github.com/jihvijhojhviihogyuvi/whatsapp-api.git
+```
+
+Then, navigate into the project directory:
+
+```powershell
+cd whatsapp-api\whatsapp-mcp-api
+```
+
 ## Install
 
 ```powershell
-cd C:\Users\james\OneDrive\Documents\Playground\whatsapp-mcp-api
 npm install
 ```
 
 If your `npm` shell shim is broken, use the full Windows command:
 
 ```powershell
-C:\Program Files\nodejs\npm install
+"C:\Program Files\nodejs\npm" install
 ```
 
 ## Run
@@ -82,12 +95,6 @@ curl.exe -X POST http://127.0.0.1:8790/api/send `
 ```powershell
 $env:WHATSAPP_MCP_HOST = "127.0.0.1"
 $env:WHATSAPP_MCP_PORT = "8790"
-$env:WHATSAPP_AUTH_DIR = "C:\path\to\auth"
-$env:WHATSAPP_CHROME_EXECUTABLE = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-```
-"C:\Program Files\Google\Chrome\Application\chrome.exe"
-```
-WHATSAPP_MCP_PORT = "8790"
 $env:WHATSAPP_AUTH_DIR = "C:\path\to\auth"
 $env:WHATSAPP_CHROME_EXECUTABLE = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 ```

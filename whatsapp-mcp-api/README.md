@@ -13,19 +13,19 @@ This uses `whatsapp-web.js`, an unofficial WhatsApp Web client. Use it only for 
 
 ```powershell
 cd C:\Users\james\OneDrive\Documents\Playground\whatsapp-mcp-api
-npm.cmd install
+npm install
 ```
 
 If your `npm` shell shim is broken, use the full Windows command:
 
 ```powershell
-& "C:\Program Files\nodejs\npm.cmd" install
+C:\Program Files\nodejs\npm install
 ```
 
 ## Run
 
 ```powershell
-npm.cmd start
+npm start
 ```
 
 Default server:

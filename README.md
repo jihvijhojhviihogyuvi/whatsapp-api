@@ -13,6 +13,10 @@ whatsapp-mcp-api/
 ```
 
 ## Install
+```powershell
+git clone https://github.com/jihvijhojhviihogyuvi/whatsapp-api.git
+```
+
 
 ```powershell
 cd whatsapp-mcp-api

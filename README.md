@@ -19,7 +19,7 @@ git clone https://github.com/jihvijhojhviihogyuvi/whatsapp-api.git
 ## Install
 
 ```powershell
-cd whatsapp-mcp-api
+cd whatsapp-api
 npm install
 ```
 

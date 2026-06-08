@@ -83,11 +83,34 @@ curl.exe -X POST http://127.0.0.1:8790/api/send `
   -d "{\"phone_number\":\"15551234567\",\"message\":\"hello from the local API\"}"
 ```
 
+## List Chats
+
+```powershell
+curl.exe "http://127.0.0.1:8790/api/chats?limit=20"
+```
+
+## Read Last Messages
+
+```powershell
+curl.exe "http://127.0.0.1:8790/api/messages?phone_number=15551234567&limit=10"
+```
+
+Or with JSON:
+
+```powershell
+curl.exe -X POST http://127.0.0.1:8790/api/messages `
+  -H "content-type: application/json" `
+  -d "{\"phone_number\":\"15551234567\",\"limit\":10}"
+```
+
 ## MCP Tools
 
 - `whatsapp_status`: connection and auth status
+- `whatsapp_start_auth`: start WhatsApp Web authentication
 - `whatsapp_pairing_code`: get a phone-number pairing code
 - `whatsapp_send_message`: send a text message
+- `whatsapp_list_chats`: list recent chats
+- `whatsapp_read_messages`: read recent messages from a phone-number chat
 - `whatsapp_logout`: logout and clear the current WhatsApp connection
 
 ## Environment

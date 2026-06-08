@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Standalone WhatsApp Web auth MCP and REST API using Baileys.",
+  "description": "Standalone WhatsApp Web auth MCP and REST API using whatsapp-web.js.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

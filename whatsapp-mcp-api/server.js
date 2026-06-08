@@ -39,6 +39,43 @@ function chatId(phoneNumber) {
   return `${normalizePhone(phoneNumber)}@c.us`;
 }
 
+function normalizeLimit(value, defaultValue, maxValue) {
+  const limit = Number(value || defaultValue);
+  if (!Number.isInteger(limit) || limit < 1 || limit > maxValue) {
+    throw new Error(`limit must be an integer between 1 and ${maxValue}`);
+  }
+  return limit;
+}
+
+function chatSummary(chat) {
+  return {
+    id: chat.id?._serialized || null,
+    name: chat.name || null,
+    is_group: Boolean(chat.isGroup),
+    is_read_only: Boolean(chat.isReadOnly),
+    unread_count: chat.unreadCount || 0,
+    timestamp: chat.timestamp || null,
+    archived: Boolean(chat.archived),
+    pinned: Boolean(chat.pinned),
+    muted: Boolean(chat.isMuted),
+    last_message: chat.lastMessage ? messageSummary(chat.lastMessage) : null
+  };
+}
+
+function messageSummary(message) {
+  return {
+    id: message.id?._serialized || message.id?.id || null,
+    from: message.from || null,
+    to: message.to || null,
+    author: message.author || null,
+    from_me: Boolean(message.fromMe),
+    type: message.type || null,
+    body: message.body || "",
+    timestamp: message.timestamp || null,
+    has_media: Boolean(message.hasMedia)
+  };
+}
+
 function toolText(payload) {
   return {
     content: [
@@ -204,6 +241,39 @@ class WhatsAppWebClient {
     };
   }
 
+  async listChats(limit = 20) {
+    const maxChats = normalizeLimit(limit, 20, 100);
+
+    await this.ensureReady();
+    const chats = await this.client.getChats();
+    const sortedChats = chats
+      .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+      .slice(0, maxChats)
+      .map(chatSummary);
+
+    return {
+      ok: true,
+      count: sortedChats.length,
+      chats: sortedChats
+    };
+  }
+
+  async readMessages(phoneNumber, limit = 10) {
+    const maxMessages = normalizeLimit(limit, 10, 100);
+
+    await this.ensureReady();
+    const to = chatId(phoneNumber);
+    const chat = await this.client.getChatById(to);
+    const messages = await chat.fetchMessages({ limit: maxMessages });
+
+    return {
+      ok: true,
+      chat: chatSummary(chat),
+      count: messages.length,
+      messages: messages.map(messageSummary)
+    };
+  }
+
   async pairingCode(phoneNumber) {
     if (!this.client) {
       await this.start();
@@ -294,6 +364,43 @@ const tools = [
     }
   },
   {
+    name: "whatsapp_list_chats",
+    description: "List recent WhatsApp chats for the authenticated WhatsApp Web session.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        limit: {
+          type: "integer",
+          minimum: 1,
+          maximum: 100,
+          description: "Maximum number of chats to return. Defaults to 20."
+        }
+      },
+      additionalProperties: false
+    }
+  },
+  {
+    name: "whatsapp_read_messages",
+    description: "Read the last messages from a phone-number chat.",
+    inputSchema: {
+      type: "object",
+      required: ["phone_number"],
+      properties: {
+        phone_number: {
+          type: "string",
+          description: "Phone number with country code, digits or E.164 format."
+        },
+        limit: {
+          type: "integer",
+          minimum: 1,
+          maximum: 100,
+          description: "Maximum number of messages to return. Defaults to 10."
+        }
+      },
+      additionalProperties: false
+    }
+  },
+  {
     name: "whatsapp_logout",
     description: "Logout WhatsApp Web for this local session.",
     inputSchema: { type: "object", properties: {}, additionalProperties: false }
@@ -315,6 +422,14 @@ async function callTool(name, args = {}) {
 
   if (name === "whatsapp_send_message") {
     return toolText(await whatsapp.sendMessage(args.phone_number, args.message));
+  }
+
+  if (name === "whatsapp_list_chats") {
+    return toolText(await whatsapp.listChats(args.limit));
+  }
+
+  if (name === "whatsapp_read_messages") {
+    return toolText(await whatsapp.readMessages(args.phone_number, args.limit));
   }
 
   if (name === "whatsapp_logout") {
@@ -475,6 +590,20 @@ async function handleRest(req, res, url) {
     return;
   }
 
+  if (req.method === "GET" && url.pathname === "/api/chats") {
+    sendJson(res, 200, await whatsapp.listChats(url.searchParams.get("limit")));
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/messages") {
+    sendJson(
+      res,
+      200,
+      await whatsapp.readMessages(url.searchParams.get("phone_number"), url.searchParams.get("limit"))
+    );
+    return;
+  }
+
   if (req.method === "POST" && url.pathname === "/api/auth/start") {
     sendJson(res, 200, await whatsapp.start());
     return;
@@ -489,6 +618,12 @@ async function handleRest(req, res, url) {
   if (req.method === "POST" && url.pathname === "/api/send") {
     const body = await readJson(req);
     sendJson(res, 200, await whatsapp.sendMessage(body.phone_number, body.message));
+    return;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/messages") {
+    const body = await readJson(req);
+    sendJson(res, 200, await whatsapp.readMessages(body.phone_number, body.limit));
     return;
   }
 
